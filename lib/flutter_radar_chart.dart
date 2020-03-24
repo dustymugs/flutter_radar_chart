@@ -91,7 +91,6 @@ class _RadarChartState extends State<RadarChart>
       ..addListener(() {
         setState(() {
           fraction = animation.value;
-					debugPrint('setting fraction: $fraction');
         });
       });
 
