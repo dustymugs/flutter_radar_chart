@@ -97,6 +97,12 @@ class _RadarChartState extends State<RadarChart>
     animationController.forward();
   }
 
+	@override
+	void dispose() {
+		animationController.dispose();
+		super.dispose();
+	}
+
   @override
   void didUpdateWidget(RadarChart oldWidget) {
     super.didUpdateWidget(oldWidget);
