@@ -42,12 +42,14 @@ class RadarChart extends StatefulWidget {
     @required List<String> features,
     @required List<List<double>> data,
     bool reverseAxis = false,
+    List<Color> graphColors = defaultGraphColors,
   }) {
     return RadarChart(
       ticks: ticks,
       features: features,
       data: data,
       reverseAxis: reverseAxis,
+			graphColors: graphColors,
     );
   }
 
@@ -56,6 +58,7 @@ class RadarChart extends StatefulWidget {
     @required List<String> features,
     @required List<List<double>> data,
     bool reverseAxis = false,
+    List<Color> graphColors = defaultGraphColors,
   }) {
     return RadarChart(
       ticks: ticks,
@@ -65,6 +68,7 @@ class RadarChart extends StatefulWidget {
       outlineColor: Colors.white,
       axisColor: Colors.grey,
       reverseAxis: reverseAxis,
+			graphColors: graphColors,
     );
   }
 
