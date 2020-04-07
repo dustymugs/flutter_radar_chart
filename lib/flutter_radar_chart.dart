@@ -232,6 +232,10 @@ class RadarChartPainter extends CustomPainter {
 
     // Painting each graph
     data.asMap().forEach((index, graph) {
+
+			if (graph.length < 1)
+			 	return;
+
       var graphPaint = Paint()
         ..color = graphColors[index % graphColors.length].withOpacity(0.3)
         ..style = PaintingStyle.fill;
