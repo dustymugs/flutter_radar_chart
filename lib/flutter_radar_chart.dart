@@ -23,6 +23,7 @@ class RadarChart extends StatefulWidget {
   final Color outlineColor;
   final Color axisColor;
   final List<Color> graphColors;
+	final bool animate;
 
   const RadarChart({
     Key key,
@@ -35,6 +36,7 @@ class RadarChart extends StatefulWidget {
     this.outlineColor = Colors.black,
     this.axisColor = Colors.grey,
     this.graphColors = defaultGraphColors,
+		this.animate = true,
   }) : super(key: key);
 
   factory RadarChart.light({
@@ -43,6 +45,7 @@ class RadarChart extends StatefulWidget {
     @required List<List<double>> data,
     bool reverseAxis = false,
     List<Color> graphColors = defaultGraphColors,
+		animate = true,
   }) {
     return RadarChart(
       ticks: ticks,
@@ -50,6 +53,7 @@ class RadarChart extends StatefulWidget {
       data: data,
       reverseAxis: reverseAxis,
 			graphColors: graphColors,
+			animate: animate,
     );
   }
 
@@ -59,6 +63,7 @@ class RadarChart extends StatefulWidget {
     @required List<List<double>> data,
     bool reverseAxis = false,
     List<Color> graphColors = defaultGraphColors,
+		bool animate = true,
   }) {
     return RadarChart(
       ticks: ticks,
@@ -69,6 +74,7 @@ class RadarChart extends StatefulWidget {
       axisColor: Colors.grey,
       reverseAxis: reverseAxis,
 			graphColors: graphColors,
+			animate: animate,
     );
   }
 
@@ -85,25 +91,29 @@ class _RadarChartState extends State<RadarChart>
   @override
   void initState() {
     super.initState();
-    animationController = AnimationController(
-        duration: Duration(milliseconds: 1000), vsync: this);
 
-    animation = Tween(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-      curve: Curves.fastOutSlowIn,
-      parent: animationController,
-    ))
-      ..addListener(() {
-        setState(() {
-          fraction = animation.value;
-        });
-      });
+		if (widget.animate) {
+			animationController = AnimationController(
+					duration: Duration(milliseconds: 1000), vsync: this);
 
-    animationController.forward();
+			animation = Tween(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+				curve: Curves.fastOutSlowIn,
+				parent: animationController,
+			))
+				..addListener(() {
+					setState(() {
+						fraction = animation.value;
+					});
+				});
+
+			animationController.forward();
+		}
   }
 
 	@override
 	void dispose() {
-		animationController.dispose();
+		if (widget.animate)
+			animationController.dispose();
 		super.dispose();
 	}
 
@@ -111,8 +121,10 @@ class _RadarChartState extends State<RadarChart>
   void didUpdateWidget(RadarChart oldWidget) {
     super.didUpdateWidget(oldWidget);
 
-    animationController.reset();
-    animationController.forward();
+		if (widget.animate) {
+			animationController.reset();
+			animationController.forward();
+		}
   }
 
   @override
