@@ -108,6 +108,8 @@ class _RadarChartState extends State<RadarChart>
 
 			animationController.forward();
 		}
+		else
+			fraction = 1.0;
   }
 
 	@override
@@ -132,16 +134,17 @@ class _RadarChartState extends State<RadarChart>
     return CustomPaint(
       size: Size(double.infinity, double.infinity),
       painter: RadarChartPainter(
-          widget.ticks,
-          widget.features,
-          widget.data,
-          widget.reverseAxis,
-          widget.ticksTextStyle,
-          widget.featuresTextStyle,
-          widget.outlineColor,
-          widget.axisColor,
-          widget.graphColors,
-          this.fraction),
+				widget.ticks,
+				widget.features,
+				widget.data,
+				widget.reverseAxis,
+				widget.ticksTextStyle,
+				widget.featuresTextStyle,
+				widget.outlineColor,
+				widget.axisColor,
+				widget.graphColors,
+				this.fraction
+			),
     );
   }
 }
