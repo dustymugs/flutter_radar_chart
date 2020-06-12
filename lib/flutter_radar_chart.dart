@@ -261,33 +261,35 @@ class RadarChartPainter extends CustomPainter {
         ..strokeWidth = 2.0
         ..isAntiAlias = true;
 
-      // Start the graph on the first value
-			var value = _validPointValue(graph[0]);
-      var pixel = _distanceAlongRadius(value, radius) * fraction;
       var path = Path();
-
-      if (reverseAxis) {
-        path.moveTo(centerX, centerY - (radius * fraction - pixel));
-      } else {
-        path.moveTo(centerX, centerY - pixel);
-      }
+			bool moved = false;
 
       graph.asMap().forEach((index, value) {
-        if (index == 0) return;
+				if (value == null)
+					return;
 
 				value = _validPointValue(value);
         var xAngle = cos(angle * index - pi / 2);
         var yAngle = sin(angle * index - pi / 2);
         var pixel = _distanceAlongRadius(value, radius) * fraction;
+				var x;
+				var y;
 
         if (reverseAxis) {
-          path.lineTo(centerX + (radius * fraction - pixel) * xAngle,
-              centerY + (radius * fraction - pixel) * yAngle);
+					x = centerX + (radius * fraction - pixel) * xAngle;
+					y = centerY + (radius * fraction - pixel) * yAngle;
         } else {
-          path.lineTo(
-              centerX + pixel * xAngle, centerY + pixel * yAngle);
+					x = centerX + pixel * xAngle;
+					y = centerY + pixel * yAngle;
         }
-      });
+
+				if (moved != true) {
+					moved = true;
+					path.moveTo(x, y);
+				}
+				else
+					path.lineTo(x, y);
+			});
 
       path.close();
       canvas.drawPath(path, graphPaint);
